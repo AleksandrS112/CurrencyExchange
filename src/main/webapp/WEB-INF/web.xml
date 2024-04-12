@@ -4,4 +4,14 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  
+  <servlet>
+    <servlet-name>Currencies</servlet-name>
+    <servlet-class>servlets.Currencies</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Currencies</servlet-name>
+    <url-pattern>/currencies</url-pattern>
+  </servlet-mapping>
+
 </web-app>
