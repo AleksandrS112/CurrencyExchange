@@ -1,12 +1,18 @@
 CREATE TABLE currencies
 (
-    id        SERIAL PRIMARY KEY,
-    code      VARCHAR(3)   NOT NULL UNIQUE,
+    id        SERIAL,
+    code      VARCHAR(3)   NOT NULL,
     full_name VARCHAR(255) NOT NULL,
-    sign      VARCHAR(3) NOT NULL
+    sign      VARCHAR(3)   NOT NULL,
+    CONSTRAINT currencies_pkey PRIMARY KEY (id),
+    CONSTRAINT currencies_code_pk UNIQUE (code),
+    CONSTRAINT length_code_check CHECK (LENGTH(code) = 3),
+    CONSTRAINT length_full_name_check CHECK (LENGTH(full_name) <= 255),
+    CONSTRAINT length_sign_check CHECK (LENGTH(sign) <= 3)
 );
-CREATE INDEX on currencies (full_name);
-CREATE INDEX on currencies (sign);
+
+CREATE INDEX currencies_full_name_idx on currencies (full_name);
+CREATE INDEX currencies_sign_idx on currencies (sign);
 
 CREATE TABLE exchange_rates
 (

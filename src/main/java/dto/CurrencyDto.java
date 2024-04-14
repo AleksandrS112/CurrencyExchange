@@ -1,23 +1,18 @@
 package dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
-@JsonPropertyOrder({ "id", "name", "code", "sign" })
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class CurrencyDto {
-    @JsonProperty("id")
     private int id;
-    @JsonProperty("code")
     private String code;
-    @JsonProperty("name")
-    private String fullName;
-    @JsonProperty("sign")
+    private String name;
     private String sign;
 
     public CurrencyDto(int id, String code, String fullName, String sign) {
         this.id = id;
         this.code = code;
-        this.fullName = fullName;
+        this.name = fullName;
         this.sign = sign;
     }
 }

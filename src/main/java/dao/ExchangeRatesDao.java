@@ -1,6 +1,5 @@
-package dao.exchangeRates;
+package dao;
 
-import dao.CRUD;
 import exception.DaoException;
 import model.CurrencyEntity;
 import model.ExchangeRatesEntity;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ExchangeRatesDao implements CRUD<Integer, ExchangeRatesEntity> {
+public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
 
     private static final ExchangeRatesDao INSTANCE = new ExchangeRatesDao();
 
@@ -51,7 +50,7 @@ public class ExchangeRatesDao implements CRUD<Integer, ExchangeRatesEntity> {
             }
             return listExchangeRatesEntity;
         } catch (SQLException throwables) {
-            throw new DaoException(throwables);
+            throw new DaoException(throwables, 500, "fff");
         }
     }
 
@@ -67,13 +66,14 @@ public class ExchangeRatesDao implements CRUD<Integer, ExchangeRatesEntity> {
             }
             return Optional.ofNullable(exchangeRatesEntity);
         } catch (SQLException throwables) {
-            throw new DaoException(throwables);
+            throw new DaoException(throwables, 500, "FFF");
         }
     }
 
     @Override
-    public void update(ExchangeRatesEntity exchangeRatesEntityxchangeRatesEntity) {
+    public boolean update(ExchangeRatesEntity exchangeRatesEntityxchangeRatesEntity) {
 
+        return false;
     }
 
     @Override
@@ -83,7 +83,7 @@ public class ExchangeRatesDao implements CRUD<Integer, ExchangeRatesEntity> {
             prepareStatement.setInt(1, id);
             return prepareStatement.executeUpdate() == 1;
         } catch (SQLException throwables) {
-            throw new DaoException(throwables);
+            throw new DaoException(throwables, 500, "FFF");
         }
     }
 
@@ -101,7 +101,7 @@ public class ExchangeRatesDao implements CRUD<Integer, ExchangeRatesEntity> {
             }
             return exchangeRatesEntity;
         } catch (SQLException throwables) {
-            throw new DaoException(throwables);
+            throw new DaoException(throwables, 500, "FFF");
         }
     }
 

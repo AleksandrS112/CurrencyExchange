@@ -1,6 +1,5 @@
-package dao.currency;
+package dao;
 
-import dao.CRUD;
 import dto.CurrencyFilter;
 import exception.DaoException;
 import model.CurrencyEntity;
@@ -9,13 +8,14 @@ import util.ConnectionManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static java.util.stream.Collectors.joining;
 
-public class CurrencyDao implements CRUD<Integer, CurrencyEntity> {
+public class CurrencyDao implements Crud<Integer, CurrencyEntity> {
 
     private static final String DELETE_SQL = """
             DELETE FROM currencies
@@ -44,6 +44,16 @@ public class CurrencyDao implements CRUD<Integer, CurrencyEntity> {
     private static final String FIND_BY_ID_SQL = FIND_ALL_SQL + """
             WHERE id = ?
             """;
+    private static final String FIND_BY_ID_CODE = FIND_ALL_SQL + """
+            WHERE code = ?
+            """;
+
+    private static final String UNIQUE_STATE = "23505";
+    private static final String VARCHAR_LENGTH_STATE = "22001";
+    private static final String CHECK_STATE = "23514";
+    private static final String NOT_NULL_STATE = "23502";
+
+
 
     private static final CurrencyDao INSTANCE = new CurrencyDao();
 
@@ -88,7 +98,7 @@ public class CurrencyDao implements CRUD<Integer, CurrencyEntity> {
             }
             return listCurrencyEntities;
         } catch (SQLException throwables) {
-            throw new DaoException(throwables);
+            throw new DaoException(throwables, 500, "База данных недоступна");
         }
     }
 
@@ -102,7 +112,7 @@ public class CurrencyDao implements CRUD<Integer, CurrencyEntity> {
             }
             return listCurrencyEntities;
         } catch (SQLException throwables) {
-            throw new DaoException(throwables);
+            throw new DaoException(throwables, 500, "База данных недоступна");
         }
     }
 
@@ -117,30 +127,29 @@ public class CurrencyDao implements CRUD<Integer, CurrencyEntity> {
             }
             return Optional.ofNullable(currencyEntity);
         } catch (SQLException throwables) {
-            throw new DaoException(throwables);
+            throw new DaoException(throwables, 500, "База данных недоступна");
         }
     }
 
-    public void update(CurrencyEntity currencyEntity) {
+    public boolean update(CurrencyEntity currencyEntity) {
         try (var connection = ConnectionManager.get();
              var prepareStatement = connection.prepareStatement(UPDATE_SQL)) {
             prepareStatement.setString(1, currencyEntity.getCode());
             prepareStatement.setString(2, currencyEntity.getFullName());
             prepareStatement.setString(3, currencyEntity.getSign());
             prepareStatement.setInt(4, currencyEntity.getId());
-            prepareStatement.executeUpdate();
-        } catch (SQLException throwables) {
-            throw new DaoException(throwables);
+            return prepareStatement.executeUpdate() == 1;
+        } catch (SQLException sqlException) {
+            throw createDaoException(sqlException);
         }
     }
-
     public boolean delete(Integer id) {
         try (var connection = ConnectionManager.get();
              var prepareStatement = connection.prepareStatement(DELETE_SQL)) {
             prepareStatement.setLong(1, id);
             return prepareStatement.executeUpdate() == 1;
-        } catch (SQLException throwables) {
-            throw new DaoException(throwables);
+        } catch (SQLException sqlException) {
+            throw new DaoException(sqlException, 500, "База данных недоступна");
         }
     }
 
@@ -155,9 +164,22 @@ public class CurrencyDao implements CRUD<Integer, CurrencyEntity> {
             if (generatedKeys.next())
                 currencyEntity.setId(generatedKeys.getInt("id"));
             return currencyEntity;
+        } catch (SQLException sqlException) {
+            throw createDaoException(sqlException);
         }
-        catch (SQLException throwables) {
-            throw new DaoException(throwables);
+    }
+
+    public Optional<CurrencyEntity> findByCode(String code) {
+        try (var connection = ConnectionManager.get();
+             var prepareStatement = connection.prepareStatement(FIND_BY_ID_SQL)) {
+            var resultSet = prepareStatement.executeQuery();
+            CurrencyEntity currencyEntity = null;
+            if(resultSet.next()) {
+                currencyEntity = bildCurrencyEntity(resultSet);
+            }
+            return Optional.ofNullable(currencyEntity);
+        } catch (SQLException sqlException) {
+            throw new DaoException(sqlException, 500, "База данных недоступна");
         }
     }
 
@@ -167,6 +189,42 @@ public class CurrencyDao implements CRUD<Integer, CurrencyEntity> {
                 resultSet.getString("code"),
                 resultSet.getString("full_name"),
                 resultSet.getString("sign"));
+    }
+
+    private static DaoException createDaoException(SQLException sqlException) {
+        String state = sqlException.getSQLState();
+        switch (state) {
+            case NOT_NULL_STATE -> {
+                String message = sqlException.getMessage();
+                if (message.contains("\"code\"")) {
+                    throw new DaoException(sqlException, 409, "Не указано значение кода валюты");
+                } else if (message.contains("\"full_name\"")) {
+                    throw new DaoException(sqlException, 409, "Не указано полное имя валюты");
+                } else if (message.contains("\"sign\"")) {
+                    throw new DaoException(sqlException, 409, "Не указан знак валюты");
+                }
+            }
+            case UNIQUE_STATE -> {
+                if (sqlException.getMessage().contains("currencies_code_pk")) {
+                    throw new DaoException(sqlException, 409, "Валюта с таким кодом уже существует");
+                }
+            }
+            case VARCHAR_LENGTH_STATE -> {
+                if (sqlException.getMessage().contains("varying(3)")) {
+                    throw new DaoException(sqlException, 409, "Код валюты больше 3 символов");
+                }
+            }
+            case CHECK_STATE -> {
+                if (sqlException.getMessage().contains("currencies_code_length_check")) {
+                    throw new DaoException(sqlException, 409, "Код валюты должен быть из 3 символов");
+                } else if (sqlException.getMessage().contains("currencies_full_name_length_check")) {
+                    throw new DaoException(sqlException, 409, "Название валюты не должно превышать 255 символов");
+                } else if (sqlException.getMessage().contains("currencies_sign_length_check")) {
+                    throw new DaoException(sqlException, 409, "Знак валюты не должен превышать 3 символа");
+                }
+            }
+        }
+        throw new DaoException(sqlException, 500, "База данных недоступна");
     }
 
 }

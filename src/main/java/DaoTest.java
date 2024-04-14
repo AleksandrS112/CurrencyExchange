@@ -1,11 +1,39 @@
 
-import dao.currency.CurrencyDao;
-import dao.exchangeRates.ExchangeRatesDao;
+import dao.CurrencyDao;
+import dao.ExchangeRatesDao;
+import exception.DaoException;
+import model.CurrencyEntity;
+import org.postgresql.util.PSQLException;
+
+import java.sql.SQLException;
+import java.util.Iterator;
 
 public class DaoTest {
     public static void main(String[] args)  {
 
-        System.out.println(ExchangeRatesDao.getInstance().findById(1));
+        CurrencyDao cd = CurrencyDao.getInstance();
+
+        CurrencyEntity ce = new CurrencyEntity(19,null, "GFG", "GFGG");
+
+        try {
+            System.out.println(cd.update(ce));
+        } catch (DaoException e) {
+
+            System.out.println(e.getCode());
+            System.out.println("_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_");
+            System.out.println("getMessage   " + e.getMessage());
+            System.out.println("fillInStackTrace   " + e.fillInStackTrace());
+            System.out.println("getLocalizedMessage   " + e.getLocalizedMessage());
+            System.out.println("getCause   " + e.getCause());
+            System.out.println("toString   " );
+            System.out.println("getStackTrace   " + e.getMessage());
+            System.out.println("getNextException   " + e.getMessage());
+            System.out.println("getSQLState   " + e.getLocalizedMessage());
+            System.out.println("getErrorCode   " + e.getCause());
+            System.out.println("getLocalizedMessage   " + e.getLocalizedMessage());
+
+        }
+
 
         /*
         var all = ExchangeRatesDao.getInstance().findAll();
@@ -34,14 +62,4 @@ public class DaoTest {
  */
 
     }
-
-    private static void extracted() {
-        CurrencyDao cd = CurrencyDao.getInstance();
-        var currencyEntity = cd.findById(4).get();
-        System.out.println(currencyEntity);
-        currencyEntity.setSign("$");
-        cd.update(currencyEntity);
-        System.out.println(cd.findById(4).get());
-    }
-
 }

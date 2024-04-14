@@ -6,13 +6,17 @@ public class CurrencyEntity {
     private String fullName;
     private String sign;
 
-    public CurrencyEntity(int id, String code, String fullName, String sign) {
-        this.id = id;
+    public CurrencyEntity(String code, String fullName, String sign) {
         this.code = code;
         this.fullName = fullName;
         this.sign = sign;
     }
-
+    public CurrencyEntity(int id, String code, String fullName, String sign) {
+        this(code, fullName, sign);
+        this.id = id;
+    }
+    public CurrencyEntity() {
+    }
 
     public int getId() {
         return id;
