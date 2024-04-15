@@ -23,6 +23,7 @@ public class CurrencyService {
                 .map(this::buildCurrencyDto)
                 .collect(Collectors.toList());
     }
+
     public Optional<CurrencyDto> findByCode(String code) {
         Optional<CurrencyEntity> currencyEntityOptional = currencyDao.findByCode(code);
         if (currencyEntityOptional.isEmpty()) {
@@ -38,4 +39,5 @@ public class CurrencyService {
                 currencyEntity.getFullName(),
                 currencyEntity.getSign());
     }
+
 }

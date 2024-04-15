@@ -1,6 +1,6 @@
 package dao;
 
-import exception.DaoException;
+import exception.RespException;
 import model.CurrencyEntity;
 import model.ExchangeRatesEntity;
 import util.ConnectionManager;
@@ -50,7 +50,7 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
             }
             return listExchangeRatesEntity;
         } catch (SQLException throwables) {
-            throw new DaoException(throwables, 500, "fff");
+            throw new RespException(throwables, 500, "fff");
         }
     }
 
@@ -66,7 +66,7 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
             }
             return Optional.ofNullable(exchangeRatesEntity);
         } catch (SQLException throwables) {
-            throw new DaoException(throwables, 500, "FFF");
+            throw new RespException(throwables, 500, "FFF");
         }
     }
 
@@ -83,7 +83,7 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
             prepareStatement.setInt(1, id);
             return prepareStatement.executeUpdate() == 1;
         } catch (SQLException throwables) {
-            throw new DaoException(throwables, 500, "FFF");
+            throw new RespException(throwables, 500, "FFF");
         }
     }
 
@@ -101,7 +101,7 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
             }
             return exchangeRatesEntity;
         } catch (SQLException throwables) {
-            throw new DaoException(throwables, 500, "FFF");
+            throw new RespException(throwables, 500, "FFF");
         }
     }
 

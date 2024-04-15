@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class CurrencyDto {
-    private int id;
+    private Integer id;
     private String code;
     private String name;
     private String sign;
@@ -15,4 +15,5 @@ public class CurrencyDto {
         this.name = fullName;
         this.sign = sign;
     }
+
 }

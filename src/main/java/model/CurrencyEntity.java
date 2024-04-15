@@ -1,7 +1,7 @@
 package model;
 
 public class CurrencyEntity {
-    private int id;
+    private Integer id;
     private String code;
     private String fullName;
     private String sign;
@@ -11,7 +11,7 @@ public class CurrencyEntity {
         this.fullName = fullName;
         this.sign = sign;
     }
-    public CurrencyEntity(int id, String code, String fullName, String sign) {
+    public CurrencyEntity(Integer id, String code, String fullName, String sign) {
         this(code, fullName, sign);
         this.id = id;
     }

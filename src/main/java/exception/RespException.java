@@ -1,11 +1,11 @@
 package exception;
 
-public class DaoException extends RuntimeException {
+public class RespException extends RuntimeException {
 
-    private int code;
-    private String message;
+    private final int code;
+    private final String message;
 
-    public DaoException(Throwable throwable, int code, String message) {
+    public RespException(Throwable throwable, int code, String message) {
         super(throwable);
         this.code = code;
         this.message = message;

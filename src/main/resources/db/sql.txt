@@ -10,7 +10,6 @@ CREATE TABLE currencies
     CONSTRAINT length_full_name_check CHECK (LENGTH(full_name) <= 255),
     CONSTRAINT length_sign_check CHECK (LENGTH(sign) <= 3)
 );
-
 CREATE INDEX currencies_full_name_idx on currencies (full_name);
 CREATE INDEX currencies_sign_idx on currencies (sign);
 
