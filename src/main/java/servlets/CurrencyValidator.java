@@ -20,7 +20,7 @@ public final class CurrencyValidator {
                     .filter(e -> e.getValue() == null || e.getValue().isBlank())
                     .map(Map.Entry::getKey)
                     .collect(Collectors.joining(", ", "Поля: ", " - не заполнены."));
-            throw new RespException(new RuntimeException(), 409, message);
+            throw new RespException(new RuntimeException(), 400, message);
         }
         if (code.length() != 3 || !code.matches("[A-Z]+"))
             throw new RespException(new RuntimeException(), 409, "Код валюты состоит не из 3 заглавных букв латинского алфавита.");

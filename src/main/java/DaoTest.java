@@ -1,23 +1,18 @@
 
 import dao.CurrencyDao;
-import dao.ExchangeRatesDao;
-import exception.DaoException;
+import exception.RespException;
 import model.CurrencyEntity;
-import org.postgresql.util.PSQLException;
-
-import java.sql.SQLException;
-import java.util.Iterator;
 
 public class DaoTest {
     public static void main(String[] args)  {
 
         CurrencyDao cd = CurrencyDao.getInstance();
 
-        CurrencyEntity ce = new CurrencyEntity(19,null, "GFG", "GFGG");
+        CurrencyEntity ce = new CurrencyEntity(19,null, null, "GFGG");
 
         try {
             System.out.println(cd.update(ce));
-        } catch (DaoException e) {
+        } catch (RespException e) {
 
             System.out.println(e.getCode());
             System.out.println("_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_");

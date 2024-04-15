@@ -19,6 +19,6 @@ CREATE TABLE exchange_rates
     base_currency_id   INT REFERENCES currencies (id) NOT NULL ,
     target_currency_id INT REFERENCES currencies (id) NOT NULL ,
     rate               DECIMAL(6) NOT NULL,
-    UNIQUE (base_currency_id, target_currency_id),
-    CHECK (base_currency_id != target_currency_id)
+    CONSTRAINT exchange_rates_base_and_target_currency_id_key UNIQUE (base_currency_id, target_currency_id),
+    CONSTRAINT exchange_rates_base_equals_target_check CHECK (base_currency_id != target_currency_id)
 )
