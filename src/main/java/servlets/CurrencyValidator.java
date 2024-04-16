@@ -26,7 +26,7 @@ public final class CurrencyValidator {
             throw new RespException(new RuntimeException(), 409, "Код валюты состоит не из 3 заглавных букв латинского алфавита.");
         if (fullName.length() > 255)
             throw new RespException(new RuntimeException(), 409, "Полное название валюты не должно превышать 255 символов.");
-        if (sign.length() <= 3)
+        if (sign.length() > 3)
             throw new RespException(new RuntimeException(), 409, "Символ валюты не должен превышать 3 символов.");
     }
 }
