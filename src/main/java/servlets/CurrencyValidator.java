@@ -22,7 +22,7 @@ public final class CurrencyValidator {
                     .collect(Collectors.joining(", ", "Поля: ", " - не заполнены."));
             throw new RespException(new RuntimeException(), 400, message);
         }
-        if (code.length() != 3 || !code.matches("[A-Z]+"))
+        if (!code.matches("[A-Z]{3}"))
             throw new RespException(new RuntimeException(), 409, "Код валюты состоит не из 3 заглавных букв латинского алфавита.");
         if (fullName.length() > 255)
             throw new RespException(new RuntimeException(), 409, "Полное название валюты не должно превышать 255 символов.");
