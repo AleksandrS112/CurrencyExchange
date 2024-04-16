@@ -214,8 +214,8 @@ public class CurrencyDao implements Crud<Integer, CurrencyEntity> {
                 }
             }
             case CHECK_STATE -> {
-                if (sqlException.getMessage().contains("currencies_code_length_check")) {
-                    throw new RespException(sqlException, 409, "Код валюты состоит не из 3 букв");
+                if (sqlException.getMessage().contains("currencies_code_regular_check")) {
+                    throw new RespException(sqlException, 409, "Код валюты состоит не из 3 заглавных латинских букв");
                 } else if (sqlException.getMessage().contains("currencies_full_name_length_check")) {
                     throw new RespException(sqlException, 409, "Название валюты превышает 255 символов");
                 } else if (sqlException.getMessage().contains("currencies_sign_length_check")) {

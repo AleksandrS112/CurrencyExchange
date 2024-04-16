@@ -49,8 +49,8 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
                 listExchangeRatesEntity.add(buildExchangeRates(resultSet));
             }
             return listExchangeRatesEntity;
-        } catch (SQLException throwables) {
-            throw new RespException(throwables, 500, "fff");
+        } catch (SQLException sqlException) {
+            throw new RespException(sqlException, 500, "База данных недоступна");
         }
     }
 
@@ -66,7 +66,7 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
             }
             return Optional.ofNullable(exchangeRatesEntity);
         } catch (SQLException throwables) {
-            throw new RespException(throwables, 500, "FFF");
+            throw new RespException(throwables, 500, "База данных недоступна");
         }
     }
 
@@ -91,8 +91,8 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
     public ExchangeRatesEntity save(ExchangeRatesEntity exchangeRatesEntity) {
         try (var connection = ConnectionManager.get();
              var prepareStatement = connection.prepareStatement(SAVE_SQL, PreparedStatement.RETURN_GENERATED_KEYS)) {
-            prepareStatement.setInt(1, exchangeRatesEntity.getBaseCurrency().getId());
-            prepareStatement.setInt(2, exchangeRatesEntity.getTargetCurrency().getId());
+            prepareStatement.setInt(1, exchangeRatesEntity.getBaseCurrencyEntity().getId());
+            prepareStatement.setInt(2, exchangeRatesEntity.getTargetCurrencyEntity().getId());
             prepareStatement.setBigDecimal(3,exchangeRatesEntity.getRate());
             prepareStatement.executeUpdate();
             var generatedKeys = prepareStatement.getGeneratedKeys();

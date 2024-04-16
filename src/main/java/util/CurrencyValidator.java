@@ -1,4 +1,4 @@
-package servlets;
+package util;
 
 import exception.RespException;
 

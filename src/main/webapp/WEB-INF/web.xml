@@ -7,11 +7,22 @@
   
   <servlet>
     <servlet-name>Currencies</servlet-name>
-    <servlet-class>servlets.Currencies</servlet-class>
+    <servlet-class>servlets.CurrenciesServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Currencies</servlet-name>
     <url-pattern>/currencies</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>ExchangeRates</servlet-name>
+    <servlet-class>servlets.ExchangeRatesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ExchangeRates</servlet-name>
+    <url-pattern>/exchangeRates</url-pattern>
+  </servlet-mapping>
+
+  ExchangeRatesServlet
 
 </web-app>

@@ -4,14 +4,14 @@ import java.math.BigDecimal;
 
 public class ExchangeRatesEntity {
     private int id;
-    private CurrencyEntity baseCurrency;
-    private CurrencyEntity targetCurrency;
+    private CurrencyEntity baseCurrencyEntity;
+    private CurrencyEntity targetCurrencyEntity;
     private BigDecimal rate;
 
     public ExchangeRatesEntity(int id, CurrencyEntity baseCurrency, CurrencyEntity targetCurrency, BigDecimal rate) {
         this.id = id;
-        this.baseCurrency = baseCurrency;
-        this.targetCurrency = targetCurrency;
+        this.baseCurrencyEntity = baseCurrency;
+        this.targetCurrencyEntity = targetCurrency;
         this.rate = rate;
     }
 
@@ -19,12 +19,12 @@ public class ExchangeRatesEntity {
         return id;
     }
 
-    public CurrencyEntity getBaseCurrency() {
-        return baseCurrency;
+    public CurrencyEntity getBaseCurrencyEntity() {
+        return baseCurrencyEntity;
     }
 
-    public CurrencyEntity getTargetCurrency() {
-        return targetCurrency;
+    public CurrencyEntity getTargetCurrencyEntity() {
+        return targetCurrencyEntity;
     }
 
     public BigDecimal getRate() {
@@ -35,12 +35,12 @@ public class ExchangeRatesEntity {
         this.id = id;
     }
 
-    public void setBaseCurrency(CurrencyEntity baseCurrency) {
-        this.baseCurrency = baseCurrency;
+    public void setBaseCurrencyEntity(CurrencyEntity baseCurrencyEntity) {
+        this.baseCurrencyEntity = baseCurrencyEntity;
     }
 
-    public void setTargetCurrency(CurrencyEntity targetCurrency) {
-        this.targetCurrency = targetCurrency;
+    public void setTargetCurrencyEntity(CurrencyEntity targetCurrencyEntity) {
+        this.targetCurrencyEntity = targetCurrencyEntity;
     }
 
     public void setRate(BigDecimal rate) {
@@ -51,8 +51,8 @@ public class ExchangeRatesEntity {
     public String toString() {
         return "ExchangeRates{" +
                "id=" + id +
-               ", baseCurrency=" + baseCurrency.toString() +
-               ", targetCurrency=" + targetCurrency.toString() +
+               ", baseCurrency=" + baseCurrencyEntity.toString() +
+               ", targetCurrency=" + targetCurrencyEntity.toString() +
                ", rate=" + rate +
                '}';
     }
