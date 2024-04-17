@@ -68,7 +68,7 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
             }
             return Optional.ofNullable(exchangeRatesEntity);
         } catch (SQLException throwables) {
-            throw new RespException(throwables, 500, "База данных недоступна");
+            throw new RespException(throwables, 500, "База данных недоступна ");
         }
     }
 
