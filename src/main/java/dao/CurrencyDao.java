@@ -170,7 +170,8 @@ public class CurrencyDao implements Crud<Integer, CurrencyEntity> {
 
     public Optional<CurrencyEntity> findByCode(String code) {
         try (var connection = ConnectionManager.get();
-             var prepareStatement = connection.prepareStatement(FIND_BY_ID_SQL)) {
+             var prepareStatement = connection.prepareStatement(FIND_BY_ID_CODE)) {
+            prepareStatement.setInt(1, code);
             var resultSet = prepareStatement.executeQuery();
             CurrencyEntity currencyEntity = null;
             if(resultSet.next()) {
