@@ -2,8 +2,8 @@ CREATE TABLE currencies
 (
     id        SERIAL,
     code      VARCHAR(3)   NOT NULL,
-    full_name VARCHAR(255) NOT NULL,
-    sign      VARCHAR(3)   NOT NULL,
+    full_name VARCHAR(255) NOT NULL, добавить var
+    sign      VARCHAR      NOT NULL,
     CONSTRAINT currencies_pkey PRIMARY KEY (id),
     CONSTRAINT currencies_code_pk UNIQUE (code),
     CONSTRAINT currencies_code_regular_check CHECK (code ~ '^[A-Z]{3}'),

@@ -3,16 +3,19 @@ package model;
 import java.math.BigDecimal;
 
 public class ExchangeRatesEntity {
-    private int id;
+    private Integer id;
     private CurrencyEntity baseCurrencyEntity;
     private CurrencyEntity targetCurrencyEntity;
     private BigDecimal rate;
 
-    public ExchangeRatesEntity(int id, CurrencyEntity baseCurrency, CurrencyEntity targetCurrency, BigDecimal rate) {
-        this.id = id;
+    public ExchangeRatesEntity(CurrencyEntity baseCurrency, CurrencyEntity targetCurrency, BigDecimal rate) {
         this.baseCurrencyEntity = baseCurrency;
         this.targetCurrencyEntity = targetCurrency;
         this.rate = rate;
+    }
+    public ExchangeRatesEntity(int id, CurrencyEntity baseCurrency, CurrencyEntity targetCurrency, BigDecimal rate) {
+        this(baseCurrency, targetCurrency, rate);
+        this.id = id;
     }
 
     public int getId() {

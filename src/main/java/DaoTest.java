@@ -1,17 +1,24 @@
 
 import dao.CurrencyDao;
+import dao.ExchangeRatesDao;
 import exception.RespException;
 import model.CurrencyEntity;
+import model.ExchangeRatesEntity;
+
+import java.math.BigDecimal;
 
 public class DaoTest {
     public static void main(String[] args)  {
 
+        try {
+
         CurrencyDao cd = CurrencyDao.getInstance();
 
-        CurrencyEntity ce = new CurrencyEntity(19,null, null, "GFGG");
+        cd.findByCode("USD");
+        BigDecimal bd = BigDecimal.valueOf(Double.parseDouble("100"));
+        ExchangeRatesEntity exchangeRatesEntity = new ExchangeRatesEntity(cd.findByCode("USD").get(), cd.findByCode("RUB").get(), bd);
+        ExchangeRatesDao.getInstance().save(exchangeRatesEntity);
 
-        try {
-            System.out.println(cd.update(ce));
         } catch (RespException e) {
 
             System.out.println(e.getCode());
@@ -28,8 +35,6 @@ public class DaoTest {
             System.out.println("getLocalizedMessage   " + e.getLocalizedMessage());
 
         }
-
-
         /*
         var all = ExchangeRatesDao.getInstance().findAll();
 

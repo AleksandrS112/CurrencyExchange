@@ -16,6 +16,8 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
 
     private static final ExchangeRatesDao INSTANCE = new ExchangeRatesDao();
 
+    private static final String UNIQUE_STATE = "23505";
+
     private static final String FIND_ALL_SQL = """
             SELECT er.id, er.rate,
                    bc.id, bc.code, bc.full_name, bc.sign,
@@ -93,16 +95,27 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
              var prepareStatement = connection.prepareStatement(SAVE_SQL, PreparedStatement.RETURN_GENERATED_KEYS)) {
             prepareStatement.setInt(1, exchangeRatesEntity.getBaseCurrencyEntity().getId());
             prepareStatement.setInt(2, exchangeRatesEntity.getTargetCurrencyEntity().getId());
-            prepareStatement.setBigDecimal(3,exchangeRatesEntity.getRate());
+            prepareStatement.setBigDecimal(3, exchangeRatesEntity.getRate());
             prepareStatement.executeUpdate();
             var generatedKeys = prepareStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
                 exchangeRatesEntity.setId(generatedKeys.getInt("id"));
             }
             return exchangeRatesEntity;
-        } catch (SQLException throwables) {
-            throw new RespException(throwables, 500, "FFF");
-        }
+        } catch (SQLException sqlException) {
+            String sqlState = sqlException.getSQLState();
+            if (sqlState.equals("23514") || sqlState.equals("23505")) {
+                if (sqlException.getMessage().contains("exchange_rates_base_and_target_currency_id_key")) {
+                    throw new RespException(sqlException, 409, "Валютная пара с таким кодом ("
+                            + exchangeRatesEntity.getBaseCurrencyEntity().getCode() + "/"
+                            + exchangeRatesEntity.getTargetCurrencyEntity().getCode()
+                            + ") уже существует");
+                } else if (sqlException.getMessage().contains("exchange_rates_pkey")) {
+                    throw new RespException(sqlException, 409, "Валютная пара с таким id уже существует");
+                }
+            }
+            throw new RespException(sqlException, 500, "База данных недоступна");
+        }//написать нормально коды и чек !!!!!!!!!!!!!!!!!!
     }
 
     // почему-то JDBC не видит колонки по названию,
