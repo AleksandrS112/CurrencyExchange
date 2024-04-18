@@ -17,6 +17,8 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
     private static final ExchangeRatesDao INSTANCE = new ExchangeRatesDao();
 
     private static final String UNIQUE_STATE = "23505";
+    private static final String CHECK_STATE = "23514";
+    private static final String NOT_NULL_STATE = "23502";
 
     private static final String FIND_ALL_SQL = """
             SELECT er.id, er.rate,
@@ -68,7 +70,7 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
             }
             return Optional.ofNullable(exchangeRatesEntity);
         } catch (SQLException throwables) {
-            throw new RespException(throwables, 500, "База данных недоступна ");
+            throw new RespException(throwables, 500, "База данных недоступна");
         }
     }
 
@@ -85,7 +87,7 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
             prepareStatement.setInt(1, id);
             return prepareStatement.executeUpdate() == 1;
         } catch (SQLException throwables) {
-            throw new RespException(throwables, 500, "FFF");
+            throw new RespException(throwables, 500, "База данных недоступна");
         }
     }
 
@@ -104,18 +106,29 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
             return exchangeRatesEntity;
         } catch (SQLException sqlException) {
             String sqlState = sqlException.getSQLState();
-            if (sqlState.equals("23514") || sqlState.equals("23505")) {
-                if (sqlException.getMessage().contains("exchange_rates_base_and_target_currency_id_key")) {
+            String message = sqlException.getMessage();
+            if (sqlState.equals(NOT_NULL_STATE)) {
+                if (message.contains("\"base_currency_id\"")) {
+                    throw new RespException(sqlException, 400, "Не указана базовая валюта");
+                } else if (message.contains("\"target_currency_id\"")) {
+                    throw new RespException(sqlException, 400, "Не указана целевая валюта");
+                } else if (message.contains("\"rate\"")) {
+                    throw new RespException(sqlException, 400, "Не указан курс обмена");
+                }
+            } else if (sqlState.equals(UNIQUE_STATE)) {
+                if (message.contains("exchange_rates_base_and_target_currency_id_key")) {
                     throw new RespException(sqlException, 409, "Валютная пара с таким кодом ("
-                            + exchangeRatesEntity.getBaseCurrencyEntity().getCode() + "/"
+                            + exchangeRatesEntity.getBaseCurrencyEntity().getCode() + "|"
                             + exchangeRatesEntity.getTargetCurrencyEntity().getCode()
                             + ") уже существует");
-                } else if (sqlException.getMessage().contains("exchange_rates_pkey")) {
-                    throw new RespException(sqlException, 409, "Валютная пара с таким id уже существует");
+                }
+            } else if (sqlState.equals(CHECK_STATE)) {
+                if (message.contains("exchange_rates_base_equals_target_check")) {
+                    throw new RespException(sqlException, 400, "Указана одна и та же валютная пара");
                 }
             }
             throw new RespException(sqlException, 500, "База данных недоступна");
-        }//написать нормально коды и чек !!!!!!!!!!!!!!!!!!
+        }
     }
 
     // почему-то JDBC не видит колонки по названию,

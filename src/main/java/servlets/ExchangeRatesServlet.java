@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+import static jakarta.servlet.http.HttpServletResponse.SC_CREATED;
 import static jakarta.servlet.http.HttpServletResponse.SC_OK;
 import static util.CurrencyValidator.checkExchangeRates;
 
@@ -72,10 +73,13 @@ public class ExchangeRatesServlet extends HttpServlet {
                     targetCurrencies.get(),
                     BigDecimal.valueOf(Double.parseDouble(rate))
             );
-            exchangeRatesDao.save(exchangeRatesEntity);
+            exchangeRatesEntity = exchangeRatesDao.save(exchangeRatesEntity);
+            ExchangeRatesDto exchangeRatesDto = exchangeRatesService.buildExchangeRatesDto(exchangeRatesEntity);
+            resp.setStatus(SC_CREATED);
+            objectMapper.writeValue(resp.getWriter(), exchangeRatesDto);
         } catch (RespException respException) {
             resp.setStatus(respException.getCode());
-            objectMapper.writeValue(resp.getWriter(), respException.getMessage());
+            objectMapper.writeValue(resp.getWriter(), respException);
         }
     }
 

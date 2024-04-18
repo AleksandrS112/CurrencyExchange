@@ -42,7 +42,7 @@ public class CurrenciesServlet extends HttpServlet {
             objectMapper.writeValue(response.getWriter(), CurrenciesDto);
         } catch (RespException respException) {
             response.setStatus(respException.getCode());
-            objectMapper.writeValue(response.getWriter(), respException.getMessage());
+            objectMapper.writeValue(response.getWriter(), respException);
         }
     }
     @Override
@@ -59,7 +59,7 @@ public class CurrenciesServlet extends HttpServlet {
             objectMapper.writeValue(resp.getWriter(), currencyDto);
         } catch (RespException respException) {
             resp.setStatus(respException.getCode());
-            objectMapper.writeValue(resp.getWriter(), respException.getMessage());
+            objectMapper.writeValue(resp.getWriter(), respException);
         }
     }
 }

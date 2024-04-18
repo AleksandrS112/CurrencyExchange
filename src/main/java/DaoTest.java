@@ -16,7 +16,7 @@ public class DaoTest {
 
         cd.findByCode("USD");
         BigDecimal bd = BigDecimal.valueOf(Double.parseDouble("100"));
-        ExchangeRatesEntity exchangeRatesEntity = new ExchangeRatesEntity(cd.findByCode("USD").get(), cd.findByCode("RUB").get(), bd);
+        ExchangeRatesEntity exchangeRatesEntity = new ExchangeRatesEntity(41, cd.findByCode("TNG").get(), cd.findByCode("USD").get(), bd);
         ExchangeRatesDao.getInstance().save(exchangeRatesEntity);
 
         } catch (RespException e) {

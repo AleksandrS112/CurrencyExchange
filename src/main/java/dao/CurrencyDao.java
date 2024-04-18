@@ -208,8 +208,6 @@ public class CurrencyDao implements Crud<Integer, CurrencyEntity> {
             case UNIQUE_STATE -> {
                 if (sqlException.getMessage().contains("currencies_code_pk")) {
                     throw new RespException(sqlException, 409, "Валюта с таким кодом уже существует");
-                } else if (sqlException.getMessage().contains("currencies_pkey")) {
-                    throw new RespException(sqlException, 409, "Валюта с таким id уже существует");
                 }
             }
             // SQL кидает var(3) без указания поля,
