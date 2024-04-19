@@ -21,7 +21,7 @@ import java.util.Optional;
 
 import static jakarta.servlet.http.HttpServletResponse.SC_CREATED;
 import static jakarta.servlet.http.HttpServletResponse.SC_OK;
-import static util.CurrencyValidator.checkExchangeRates;
+import static util.CurrencyValidator;
 
 public class ExchangeRatesServlet extends HttpServlet {
 
@@ -60,15 +60,14 @@ public class ExchangeRatesServlet extends HttpServlet {
         String targetCurrenciesCode = req.getParameter("targetCurrenciesCode");
         String rate = req.getParameter("rate");
         try {
-            checkExchangeRates(baseCurrenciesCode, targetCurrenciesCode, rate);
+            CurrencyValidator.checkExchangeRates(baseCurrenciesCode, targetCurrenciesCode, rate);
             Optional<CurrencyEntity> baseCurrencies = currencyDao.findByCode(baseCurrenciesCode);
-            УБРАТЬ ЭТИ ПРОВЕРКИ ДОБАВИТЬ В DAO !
             if (baseCurrencies.isEmpty()) {
-                throw new RespException(new RuntimeException(), 404, "Базовая валюта с кодом " +baseCurrenciesCode +" отсутствует");
+                throw new RespException(404, "Базовая валюта с кодом " +baseCurrenciesCode +" отсутствует");
             }
             Optional<CurrencyEntity> targetCurrencies = currencyDao.findByCode(targetCurrenciesCode);
             if (targetCurrencies.isEmpty()) {
-                throw new RespException(new RuntimeException(), 404, "Целевая валюта с кодом " +targetCurrenciesCode +" отсутствует");
+                throw new RespException(404, "Целевая валюта с кодом " +targetCurrenciesCode +" отсутствует");
             }
             ExchangeRatesEntity exchangeRatesEntity = new ExchangeRatesEntity(baseCurrencies.get(),
                     targetCurrencies.get(),
