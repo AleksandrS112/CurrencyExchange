@@ -62,6 +62,7 @@ public class ExchangeRatesServlet extends HttpServlet {
         try {
             checkExchangeRates(baseCurrenciesCode, targetCurrenciesCode, rate);
             Optional<CurrencyEntity> baseCurrencies = currencyDao.findByCode(baseCurrenciesCode);
+            УБРАТЬ ЭТИ ПРОВЕРКИ ДОБАВИТЬ В DAO !
             if (baseCurrencies.isEmpty()) {
                 throw new RespException(new RuntimeException(), 404, "Базовая валюта с кодом " +baseCurrenciesCode +" отсутствует");
             }
