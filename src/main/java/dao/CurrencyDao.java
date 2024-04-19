@@ -174,7 +174,6 @@ public class CurrencyDao implements Crud<Integer, CurrencyEntity> {
             prepareStatement.setString(1, code);
             var resultSet = prepareStatement.executeQuery();
             CurrencyEntity currencyEntity = null;
-
             if(resultSet.next()) {
                 currencyEntity = bildCurrencyEntity(resultSet);
             }
@@ -194,42 +193,41 @@ public class CurrencyDao implements Crud<Integer, CurrencyEntity> {
 
     private static RespException createDaoException(SQLException sqlException) {
         String state = sqlException.getSQLState();
+        String message = sqlException.getMessage();
         switch (state) {
             case NOT_NULL_STATE -> {
-                String message = sqlException.getMessage();
                 if (message.contains("\"code\"")) {
-                    throw new RespException(sqlException, 400, "Не указано значение кода валюты");
+                    throw new RespException(400, "Не указано значение кода валюты");
                 } else if (message.contains("\"full_name\"")) {
-                    throw new RespException(sqlException, 400, "Не указано полное имя валюты");
+                    throw new RespException(400, "Не указано полное имя валюты");
                 } else if (message.contains("\"sign\"")) {
-                    throw new RespException(sqlException, 400, "Не указан знак валюты");
+                    throw new RespException(400, "Не указан знак валюты");
                 }
             }
             case UNIQUE_STATE -> {
-                if (sqlException.getMessage().contains("currencies_code_pk")) {
-                    throw new RespException(sqlException, 409, "Валюта с таким кодом уже существует");
+                if (message.contains("currencies_code_pk")) {
+                    throw new RespException(409, "Валюта с таким кодом уже существует");
                 }
             }
-            // SQL кидает var(3) без указания поля,
-            // если у двух полей ограничение var(3) непонятно на какое ругается
+            // SQL кидает var(3) без указания поля, если у двух полей ограничение var(3) непонятно на какое ругается
             case VARCHAR_LENGTH_STATE -> {
-                if (sqlException.getMessage().contains("varying(3)")) {
-                    throw new RespException(sqlException, 400, "Код валюты больше 3 букв");
-                } else if (sqlException.getMessage().contains("varying(255)")) {
-                    throw new RespException(sqlException, 400, "Название валюты превышает 255 символов");
+                if (message.contains("varying(3)")) {
+                    throw new RespException(400, "Код валюты больше 3 букв");
+                } else if (message.contains("varying(255)")) {
+                    throw new RespException(400, "Название валюты превышает 255 символов");
                 }
             }
             case CHECK_STATE -> {
-                if (sqlException.getMessage().contains("currencies_code_regular_check")) {
-                    throw new RespException(sqlException, 400, "Код валюты состоит не из 3 заглавных латинских букв");
-                } else if (sqlException.getMessage().contains("currencies_full_name_length_check")) {
-                    throw new RespException(sqlException, 400, "Название валюты превышает 255 символов");
-                } else if (sqlException.getMessage().contains("currencies_sign_length_check")) {
-                    throw new RespException(sqlException, 400, "Знак валюты превышает 3 символа");
+                if (message.contains("currencies_code_regular_check")) {
+                    throw new RespException(400, "Код валюты состоит не из 3 заглавных латинских букв");
+                } else if (message.contains("currencies_full_name_length_check")) {
+                    throw new RespException(400, "Название валюты превышает 255 символов");
+                } else if (message.contains("currencies_sign_length_check")) {
+                    throw new RespException(400, "Знак валюты превышает 3 символа");
                 }
             }
         }
-        throw new RespException(sqlException, 500, "База данных недоступна");
+        throw new RespException(500, "База данных недоступна");
     }
 
 }
