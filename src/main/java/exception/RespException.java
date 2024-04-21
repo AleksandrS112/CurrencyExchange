@@ -1,7 +1,6 @@
 package exception;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
@@ -13,8 +12,7 @@ public class RespException extends RuntimeException {
     @JsonProperty
     private final String message;
 
-    public RespException(Throwable throwable, int code, String message) {
-        super(throwable);
+    public RespException( int code, String message) {
         this.code = code;
         this.message = message;
     }

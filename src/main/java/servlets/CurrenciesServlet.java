@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.CurrencyEntity;
 import service.CurrencyService;
-import util.CurrencyValidator;
+import util.Validator;
 
 import java.io.IOException;
 import java.util.List;
@@ -52,7 +52,7 @@ public class CurrenciesServlet extends HttpServlet {
         String fullName = req.getParameter("full_name");
         String sign = req.getParameter("sign");
         try {
-            CurrencyValidator.checkCurrencyProperties(code, fullName, sign);
+            Validator.checkCurrencyProperties(code, fullName, sign);
             CurrencyEntity currencyEntity = currencyDao.save(new CurrencyEntity(code, fullName, sign));
             CurrencyDto currencyDto = currencyService.buildCurrencyDto(currencyEntity);
             resp.setStatus(SC_CREATED);

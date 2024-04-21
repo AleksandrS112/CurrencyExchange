@@ -97,7 +97,7 @@ public class CurrencyDao implements Crud<Integer, CurrencyEntity> {
             }
             return listCurrencyEntities;
         } catch (SQLException throwables) {
-            throw new RespException(throwables, 500, "База данных недоступна");
+            throw new RespException(500, "База данных недоступна");
         }
     }
 
@@ -111,7 +111,7 @@ public class CurrencyDao implements Crud<Integer, CurrencyEntity> {
             }
             return listCurrencyEntities;
         } catch (SQLException throwables) {
-            throw new RespException(throwables, 500, "База данных недоступна");
+            throw new RespException(500, "База данных недоступна");
         }
     }
 
@@ -126,7 +126,7 @@ public class CurrencyDao implements Crud<Integer, CurrencyEntity> {
             }
             return Optional.ofNullable(currencyEntity);
         } catch (SQLException throwables) {
-            throw new RespException(throwables, 500, "База данных недоступна");
+            throw new RespException(500, "База данных недоступна");
         }
     }
 
@@ -148,7 +148,7 @@ public class CurrencyDao implements Crud<Integer, CurrencyEntity> {
             prepareStatement.setLong(1, id);
             return prepareStatement.executeUpdate() == 1;
         } catch (SQLException sqlException) {
-            throw new RespException(sqlException, 500, "База данных недоступна");
+            throw new RespException(500, "База данных недоступна");
         }
     }
 
@@ -179,7 +179,7 @@ public class CurrencyDao implements Crud<Integer, CurrencyEntity> {
             }
             return Optional.ofNullable(currencyEntity);
         } catch (SQLException sqlException) {
-            throw new RespException(sqlException, 500, "База данных недоступна");
+            throw new RespException(500, "База данных недоступна");
         }
     }
 

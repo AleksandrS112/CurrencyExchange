@@ -2,13 +2,12 @@ package util;
 
 import exception.RespException;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public final class CurrencyValidator {
+public final class Validator {
 
     public static void checkCurrencyProperties(String code, String fullName, String sign) {
         if (code == null || code.isBlank() || fullName == null || fullName.isBlank() || sign == null || sign.isBlank()) {
@@ -20,14 +19,14 @@ public final class CurrencyValidator {
                     .filter(e -> e.getValue() == null || e.getValue().isBlank())
                     .map(Map.Entry::getKey)
                     .collect(Collectors.joining(", ", "Поля: ", " - не заполнены."));
-            throw new RespException(new RuntimeException(), 400, message);
+            throw new RespException(400, message);
         }
         if (!code.matches("[A-Z]{3}"))
-            throw new RespException(new RuntimeException(), 400, "Код валюты состоит не из 3 заглавных букв латинского алфавита.");
+            throw new RespException(400, "Код валюты состоит не из 3 заглавных букв латинского алфавита.");
         if (fullName.length() > 255)
-            throw new RespException(new RuntimeException(), 400, "Полное название валюты не должно превышать 255 символов.");
+            throw new RespException(400, "Полное название валюты не должно превышать 255 символов.");
         if (sign.length() > 3)
-            throw new RespException(new RuntimeException(), 400, "Символ валюты не должен превышать 3 символов.");
+            throw new RespException(400, "Символ валюты не должен превышать 3 символов.");
     }
 
     public static void checkExchangeRates(String baseCurrenciesCode, String targetCurrenciesCode, String rate) {
@@ -42,16 +41,16 @@ public final class CurrencyValidator {
                     .filter(e -> e.getValue() == null || e.getValue().isBlank())
                     .map(Map.Entry::getKey)
                     .collect(Collectors.joining(", ", "Поля: ", " - не заполнены."));
-            throw new RespException(new RuntimeException(), 400, message);
+            throw new RespException(400, message);
         }
         if (!baseCurrenciesCode.matches("[A-Z]{3}"))
-            throw new RespException(new RuntimeException(), 400, "Код базовой валюты состоит не из 3 заглавных букв латинского алфавита.");
+            throw new RespException(400, "Код базовой валюты состоит не из 3 заглавных букв латинского алфавита.");
         if (!targetCurrenciesCode.matches("[A-Z]{3}"))
-            throw new RespException(new RuntimeException(), 400, "Код целевой валюты состоит не из 3 заглавных букв латинского алфавита.");
+            throw new RespException(400, "Код целевой валюты состоит не из 3 заглавных букв латинского алфавита.");
         try {
             Double.parseDouble(rate);
         } catch (NumberFormatException e) {
-            throw new RespException(e, 400, "Неверно указан курс обмена");
+            throw new RespException(400, "Неверно указан курс обмена");
         }
     }
 

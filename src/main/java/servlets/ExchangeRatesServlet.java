@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import model.CurrencyEntity;
 import model.ExchangeRatesEntity;
 import service.ExchangeRatesService;
+import util.Validator;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -21,7 +22,7 @@ import java.util.Optional;
 
 import static jakarta.servlet.http.HttpServletResponse.SC_CREATED;
 import static jakarta.servlet.http.HttpServletResponse.SC_OK;
-import static util.CurrencyValidator;
+
 
 public class ExchangeRatesServlet extends HttpServlet {
 
@@ -60,7 +61,7 @@ public class ExchangeRatesServlet extends HttpServlet {
         String targetCurrenciesCode = req.getParameter("targetCurrenciesCode");
         String rate = req.getParameter("rate");
         try {
-            CurrencyValidator.checkExchangeRates(baseCurrenciesCode, targetCurrenciesCode, rate);
+            Validator.checkExchangeRates(baseCurrenciesCode, targetCurrenciesCode, rate);
             Optional<CurrencyEntity> baseCurrencies = currencyDao.findByCode(baseCurrenciesCode);
             if (baseCurrencies.isEmpty()) {
                 throw new RespException(404, "Базовая валюта с кодом " +baseCurrenciesCode +" отсутствует");
