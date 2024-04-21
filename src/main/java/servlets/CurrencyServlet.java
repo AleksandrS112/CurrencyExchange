@@ -32,6 +32,9 @@ public class CurrencyServlet extends HttpServlet {
         resp.setContentType("application/json; charset=utf-8");
         String code = req.getPathInfo().replaceAll("/", "");
         try {
+            if (code.isBlank()) {
+                throw new RespException(400, "Код валюты отсутствует в адресе");
+            }
             if (!code.matches("[A-Z]{3}"))
                 throw new RespException(400, "Не верно указан код валюты");
             Optional<CurrencyEntity> currencyEntity = currencyDao.findByCode(code);
@@ -42,9 +45,6 @@ public class CurrencyServlet extends HttpServlet {
         } catch (RespException respException) {
             resp.setStatus(respException.getCode());
             objectMapper.writeValue(resp.getWriter(), respException);
-        }
-        if (code.isBlank()) {
-            throw new RespException(400, "Код валюты отсутствует в адресе");
         }
     }
 }
