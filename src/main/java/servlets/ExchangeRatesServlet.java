@@ -62,16 +62,13 @@ public class ExchangeRatesServlet extends HttpServlet {
         String rate = req.getParameter("rate");
         try {
             Validator.checkExchangeRates(baseCurrenciesCode, targetCurrenciesCode, rate);
-            Optional<CurrencyEntity> baseCurrencies = currencyDao.findByCode(baseCurrenciesCode);
-            if (baseCurrencies.isEmpty()) {
-                throw new RespException(404, "Базовая валюта с кодом " +baseCurrenciesCode +" отсутствует");
-            }
-            Optional<CurrencyEntity> targetCurrencies = currencyDao.findByCode(targetCurrenciesCode);
-            if (targetCurrencies.isEmpty()) {
-                throw new RespException(404, "Целевая валюта с кодом " +targetCurrenciesCode +" отсутствует");
-            }
-            ExchangeRatesEntity exchangeRatesEntity = new ExchangeRatesEntity(baseCurrencies.get(),
-                    targetCurrencies.get(),
+            CurrencyEntity baseCurrencies = currencyDao.findByCode(baseCurrenciesCode)
+                .orElseThrow(() -> throw new RespException(404, "Базовая валюта с кодом " +baseCurrenciesCode +" отсутствует"));
+            CurrencyEntity targetCurrencies = currencyDao.findByCode(targetCurrenciesCode)
+                .orElseThrow(() ->  throw new RespException(404, "Целевая валюта с кодом " +targetCurrenciesCode +" отсутствует"));
+            ExchangeRatesEntity exchangeRatesEntity = new ExchangeRatesEntity(
+                    baseCurrencies,
+                    targetCurrencies,
                     BigDecimal.valueOf(Double.parseDouble(rate))
             );
             exchangeRatesEntity = exchangeRatesDao.save(exchangeRatesEntity);
