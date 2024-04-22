@@ -1,4 +1,4 @@
-package servlets;
+package servlets.exchange;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.CurrencyDao;
@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import model.CurrencyEntity;
 import model.ExchangeRatesEntity;
 import service.ExchangeRatesService;
+import servlets.BaseServlet;
 import util.Validator;
 
 import java.io.IOException;
@@ -24,24 +25,10 @@ import static jakarta.servlet.http.HttpServletResponse.SC_CREATED;
 import static jakarta.servlet.http.HttpServletResponse.SC_OK;
 
 
-public class ExchangeRatesServlet extends HttpServlet {
-
-    ExchangeRatesService exchangeRatesService;
-    ExchangeRatesDao exchangeRatesDao;
-    CurrencyDao currencyDao;
-    ObjectMapper objectMapper;
-
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        currencyDao = CurrencyDao.getInstance();
-        exchangeRatesDao = ExchangeRatesDao.getInstance();
-        objectMapper = new ObjectMapper();
-        exchangeRatesService = ExchangeRatesService.getInstance();
-    }
+public class ExchangeRatesServlet extends BaseServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("application/json; charset=utf-8");
         try {
             List<ExchangeRatesDto> allExchangeRatesDto = exchangeRatesDao.findAll().stream()
                     .map(exchangeRatesEntity -> exchangeRatesService.buildExchangeRatesDto(exchangeRatesEntity))
@@ -56,16 +43,15 @@ public class ExchangeRatesServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("application/json; charset=utf-8");
         String baseCurrenciesCode = req.getParameter("baseCurrenciesCode");
         String targetCurrenciesCode = req.getParameter("targetCurrenciesCode");
         String rate = req.getParameter("rate");
         try {
             Validator.checkExchangeRates(baseCurrenciesCode, targetCurrenciesCode, rate);
             CurrencyEntity baseCurrencies = currencyDao.findByCode(baseCurrenciesCode)
-                .orElseThrow(() -> throw new RespException(404, "Базовая валюта с кодом " +baseCurrenciesCode +" отсутствует"));
+                .orElseThrow(() -> new RespException(404, "Базовая валюта с кодом " +baseCurrenciesCode +" отсутствует"));
             CurrencyEntity targetCurrencies = currencyDao.findByCode(targetCurrenciesCode)
-                .orElseThrow(() ->  throw new RespException(404, "Целевая валюта с кодом " +targetCurrenciesCode +" отсутствует"));
+                .orElseThrow(() -> new RespException(404, "Целевая валюта с кодом " + targetCurrenciesCode + " отсутствует"));
             ExchangeRatesEntity exchangeRatesEntity = new ExchangeRatesEntity(
                     baseCurrencies,
                     targetCurrencies,

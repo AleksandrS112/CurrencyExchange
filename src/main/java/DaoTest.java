@@ -1,6 +1,7 @@
 
 import dao.CurrencyDao;
 import dao.ExchangeRatesDao;
+import dao.PSQLState;
 import exception.RespException;
 import model.CurrencyEntity;
 import model.ExchangeRatesEntity;
@@ -13,8 +14,8 @@ public class DaoTest {
         try {
 
         CurrencyDao cd = CurrencyDao.getInstance();
-
-        cd.findByCode("USD");
+            var state = PSQLState.NOT_NULL_STATE.getState();
+            cd.findByCode("USD");
         BigDecimal bd = BigDecimal.valueOf(Double.parseDouble("100"));
         ExchangeRatesEntity exchangeRatesEntity = new ExchangeRatesEntity(41, cd.findByCode("TNG").get(), cd.findByCode("USD").get(), bd);
         ExchangeRatesDao.getInstance().save(exchangeRatesEntity);

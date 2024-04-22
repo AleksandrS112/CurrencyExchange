@@ -7,7 +7,7 @@
   
   <servlet>
     <servlet-name>Currencies</servlet-name>
-    <servlet-class>servlets.CurrenciesServlet</servlet-class>
+    <servlet-class>servlets.currency.CurrenciesServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Currencies</servlet-name>
@@ -16,7 +16,7 @@
 
   <servlet>
     <servlet-name>Currency</servlet-name>
-    <servlet-class>servlets.CurrencyServlet</servlet-class>
+    <servlet-class>servlets.currency.CurrencyServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Currency</servlet-name>
@@ -25,11 +25,20 @@
 
   <servlet>
     <servlet-name>ExchangeRates</servlet-name>
-    <servlet-class>servlets.ExchangeRatesServlet</servlet-class>
+    <servlet-class>servlets.exchange.ExchangeRatesServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ExchangeRates</servlet-name>
     <url-pattern>/exchangeRates</url-pattern>
   </servlet-mapping>
+
+  <filter>
+    <filter-name>Filter</filter-name>
+    <filter-class>servlets.BaseFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>Filter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
 
 </web-app>
