@@ -14,7 +14,6 @@ public class DaoTest {
         try {
 
         CurrencyDao cd = CurrencyDao.getInstance();
-            var state = PSQLState.NOT_NULL_STATE.getState();
             cd.findByCode("USD");
         BigDecimal bd = BigDecimal.valueOf(Double.parseDouble("100"));
         ExchangeRatesEntity exchangeRatesEntity = new ExchangeRatesEntity(41, cd.findByCode("TNG").get(), cd.findByCode("USD").get(), bd);

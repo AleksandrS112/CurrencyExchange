@@ -4,7 +4,6 @@ import exception.RespException;
 import model.CurrencyEntity;
 import model.ExchangeRatesEntity;
 import util.ConnectionManager;
-import dao.PSQLState;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,14 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static dao.PSQLState.*;
+
 public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
 
     private static final ExchangeRatesDao INSTANCE = new ExchangeRatesDao();
-
-    private static final String UNIQUE_STATE = "23505";
-    private static final String CHECK_STATE = "23514";
-    private static final String NOT_NULL_STATE = "23502";
-    private static final String FOREIGN_KEY_STATE = "23503";
 
     private static final String FIND_ALL_SQL = """
             SELECT er.id, er.rate,
@@ -80,7 +76,6 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
 
     @Override
     public boolean update(ExchangeRatesEntity exchangeRatesEntityxchangeRatesEntity) {
-
         return false;
     }
 
@@ -90,7 +85,7 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
              var prepareStatement = connection.prepareStatement(DELETE_SQL)) {
             prepareStatement.setInt(1, id);
             return prepareStatement.executeUpdate() == 1;
-        } catch (SQLException throwables) {
+        } catch (SQLException sqlException) {
             throw new RespException(500, "База данных недоступна");
         }
     }
@@ -111,37 +106,35 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
         } catch (SQLException sqlException) {
             String sqlState = sqlException.getSQLState();
             String message = sqlException.getMessage();
-            switch (sqlState) {
-                case NOT_NULL_STATE -> {
-                    if (message.contains("\"base_currency_id\"")) {
-                        throw new RespException(400, "Не указана базовая валюта");
-                    } else if (message.contains("\"target_currency_id\"")) {
-                        throw new RespException(400, "Не указана целевая валюта");
-                    } else if (message.contains("\"rate\"")) {
-                        throw new RespException(400, "Не указан курс обмена");
-                    }
+            if (sqlState.equals(NOT_NULL.getState())) {
+                if (message.contains("\"base_currency_id\"")) {
+                    throw new RespException(400, "Не указана базовая валюта");
+                } else if (message.contains("\"target_currency_id\"")) {
+                    throw new RespException(400, "Не указана целевая валюта");
+                } else if (message.contains("\"rate\"")) {
+                    throw new RespException(400, "Не указан курс обмена");
                 }
-                case FOREIGN_KEY_STATE -> {
-                    if (message.contains("exchange_rates_base_currency_id_fkey")) {
-                        throw new RespException(404, "Базовая валюта с кодом "
-                                + exchangeRatesEntity.getBaseCurrencyEntity().getCode() + " отсутствует");
-                    } else if (message.contains("exchange_rates_target_currency_id_fkey")) {
-                        throw new RespException(404, "Целевая валюта с кодом "
-                                + exchangeRatesEntity.getTargetCurrencyEntity().getCode() + " отсутствует");
-                    }
+            }
+            if (sqlState.equals(FOREIGN_KEY.getState())) {
+                if (message.contains("exchange_rates_base_currency_id_fkey")) {
+                    throw new RespException(404, "Базовая валюта с кодом "
+                            + exchangeRatesEntity.getBaseCurrencyEntity().getCode() + " отсутствует");
+                } else if (message.contains("exchange_rates_target_currency_id_fkey")) {
+                    throw new RespException(404, "Целевая валюта с кодом "
+                            + exchangeRatesEntity.getTargetCurrencyEntity().getCode() + " отсутствует");
                 }
-                case UNIQUE_STATE -> {
-                    if (message.contains("exchange_rates_base_and_target_currency_id_key")) {
-                        throw new RespException(409, "Валютная пара с таким кодом ("
-                                + exchangeRatesEntity.getBaseCurrencyEntity().getCode() + "|"
-                                + exchangeRatesEntity.getTargetCurrencyEntity().getCode()
-                                + ") уже существует");
-                    }
+            }
+            if (sqlState.equals(UNIQUE.getState())) {
+                if (message.contains("exchange_rates_base_and_target_currency_id_key")) {
+                    throw new RespException(409, "Валютная пара с таким кодом ("
+                            + exchangeRatesEntity.getBaseCurrencyEntity().getCode() + "|"
+                            + exchangeRatesEntity.getTargetCurrencyEntity().getCode()
+                            + ") уже существует");
                 }
-                case CHECK_STATE -> {
-                    if (message.contains("exchange_rates_base_equals_target_check")) {
-                        throw new RespException(400, "Указана одна и та же валютная пара");
-                    }
+            }
+            if (sqlState.equals(CHECK.getState())) {
+                if (message.contains("exchange_rates_base_equals_target_check")) {
+                    throw new RespException(400, "Указана одна и та же валютная пара");
                 }
             }
             throw new RespException(500, "База данных недоступна");

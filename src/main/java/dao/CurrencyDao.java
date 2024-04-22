@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static dao.PSQLState.*;
 import static java.util.stream.Collectors.joining;
 
 public class CurrencyDao implements Crud<Integer, CurrencyEntity> {
@@ -46,13 +47,6 @@ public class CurrencyDao implements Crud<Integer, CurrencyEntity> {
     private static final String FIND_BY_CODE = FIND_ALL_SQL + """
             WHERE code = ?
             """;
-
-    private static final String UNIQUE_STATE = "23505";
-    private static final String VARCHAR_LENGTH_STATE = "22001";
-    private static final String CHECK_STATE = "23514";
-    private static final String NOT_NULL_STATE = "23502";
-
-
 
     private static final CurrencyDao INSTANCE = new CurrencyDao();
 
@@ -192,39 +186,37 @@ public class CurrencyDao implements Crud<Integer, CurrencyEntity> {
     }
 
     private static RespException createDaoException(SQLException sqlException) {
-        String state = sqlException.getSQLState();
+        String sqlState = sqlException.getSQLState();
         String message = sqlException.getMessage();
-        switch (state) {
-            case NOT_NULL_STATE -> {
-                if (message.contains("\"code\"")) {
-                    throw new RespException(400, "Не указано значение кода валюты");
-                } else if (message.contains("\"full_name\"")) {
-                    throw new RespException(400, "Не указано полное имя валюты");
-                } else if (message.contains("\"sign\"")) {
-                    throw new RespException(400, "Не указан знак валюты");
-                }
+        if (sqlState.equals(NOT_NULL.getState())) {
+            if (message.contains("\"code\"")) {
+                throw new RespException(400, "Не указано значение кода валюты");
+            } else if (message.contains("\"full_name\"")) {
+                throw new RespException(400, "Не указано полное имя валюты");
+            } else if (message.contains("\"sign\"")) {
+                throw new RespException(400, "Не указан знак валюты");
             }
-            case UNIQUE_STATE -> {
-                if (message.contains("currencies_code_pk")) {
-                    throw new RespException(409, "Валюта с таким кодом уже существует");
-                }
+        }
+        if (sqlState.equals(UNIQUE.getState())) {
+            if (message.contains("currencies_code_pk")) {
+                throw new RespException(409, "Валюта с таким кодом уже существует");
             }
-            // SQL кидает var(3) без указания поля, если у двух полей ограничение var(3) непонятно на какое ругается
-            case VARCHAR_LENGTH_STATE -> {
-                if (message.contains("varying(3)")) {
-                    throw new RespException(400, "Код валюты больше 3 букв");
-                } else if (message.contains("varying(255)")) {
-                    throw new RespException(400, "Название валюты превышает 255 символов");
-                }
+        }
+        // SQL кидает var(3) без указания поля, если у двух полей ограничение var(3) непонятно на какое ругается
+        if (sqlState.equals(VARCHAR_LENGTH.getState())) {
+            if (message.contains("varying(3)")) {
+                throw new RespException(400, "Код валюты больше 3 букв");
+            } else if (message.contains("varying(255)")) {
+                throw new RespException(400, "Название валюты превышает 255 символов");
             }
-            case CHECK_STATE -> {
-                if (message.contains("currencies_code_regular_check")) {
-                    throw new RespException(400, "Код валюты состоит не из 3 заглавных латинских букв");
-                } else if (message.contains("currencies_full_name_length_check")) {
-                    throw new RespException(400, "Название валюты превышает 255 символов");
-                } else if (message.contains("currencies_sign_length_check")) {
-                    throw new RespException(400, "Знак валюты превышает 3 символа");
-                }
+        }
+        if (sqlState.equals(CHECK.getState())) {
+            if (message.contains("currencies_code_regular_check")) {
+                throw new RespException(400, "Код валюты состоит не из 3 заглавных латинских букв");
+            } else if (message.contains("currencies_full_name_length_check")) {
+                throw new RespException(400, "Название валюты превышает 255 символов");
+            } else if (message.contains("currencies_sign_length_check")) {
+                throw new RespException(400, "Знак валюты превышает 3 символа");
             }
         }
         throw new RespException(500, "База данных недоступна");
