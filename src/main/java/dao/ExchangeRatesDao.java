@@ -114,7 +114,7 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
                     throw new RespException(400, "Не указана целевая валюта");
                 } else if (message.contains("\"rate\"")) {
                     throw new RespException(400, "Не указан курс обмена");
-                }
+                } ЕЩЕ ОТСУТСТВУЮЩИЙ КЛЮЧ ПОЙМАТЬ
             } else if (sqlState.equals(UNIQUE_STATE)) {
                 if (message.contains("exchange_rates_base_and_target_currency_id_key")) {
                     throw new RespException(409, "Валютная пара с таким кодом ("
