@@ -29,6 +29,9 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
     private static final String FIND_BY_ID_SQL = FIND_ALL_SQL + """
             WHERE er.id = ?
             """;
+    private static final String FIND_BY_CODES_SQL = FIND_ALL_SQL + """
+            WHERE bc.code = ? AND tc.code = ?
+            """;
     private static final String DELETE_SQL = """
             DELETE FROM exchange_rates
             WHERE id = ?;
@@ -69,7 +72,7 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
                 exchangeRatesEntity = buildExchangeRates(resultSet);
             }
             return Optional.ofNullable(exchangeRatesEntity);
-        } catch (SQLException throwables) {
+        } catch (SQLException sqlException) {
             throw new RespException(500, "База данных недоступна");
         }
     }
@@ -137,6 +140,21 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
                     throw new RespException(400, "Указана одна и та же валютная пара");
                 }
             }
+            throw new RespException(500, "База данных недоступна");
+        }
+    }
+
+    public Optional<ExchangeRatesEntity> findByCodes(String baseCurrency, String targetCurrency) {
+        try (var connection = ConnectionManager.get();
+             var prepareStatement = connection.prepareStatement(FIND_BY_CODES_SQL)){
+            prepareStatement.setString(1, baseCurrency);
+            prepareStatement.setString(2, targetCurrency);
+            var resultSet = prepareStatement.executeQuery();
+            ExchangeRatesEntity exchangeRatesEntity = null;
+            if(resultSet.next())
+                exchangeRatesEntity = buildExchangeRates(resultSet);
+            return Optional.ofNullable(exchangeRatesEntity);
+        } catch (SQLException sqlException) {
             throw new RespException(500, "База данных недоступна");
         }
     }

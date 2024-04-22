@@ -32,8 +32,6 @@ public class CurrencyDao implements Crud<Integer, CurrencyEntity> {
                    sign = ?
              WHERE id = ?
             """;
-
-
     private static final String FIND_ALL_SQL = """
             SELECT id,
                    code,
@@ -119,7 +117,7 @@ public class CurrencyDao implements Crud<Integer, CurrencyEntity> {
                 currencyEntity = bildCurrencyEntity(resultSet);
             }
             return Optional.ofNullable(currencyEntity);
-        } catch (SQLException throwables) {
+        } catch (SQLException sqlException) {
             throw new RespException(500, "База данных недоступна");
         }
     }
