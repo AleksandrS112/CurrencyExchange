@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 public final class Validator {
 
-    public static void checkCurrencyProperties(String code, String fullName, String sign) {
+    public static void checkCurrencyParam(String code, String fullName, String sign) {
         if (code == null || code.isBlank() || fullName == null || fullName.isBlank() || sign == null || sign.isBlank()) {
             Map<String, String> mapParameters = new HashMap<>();
             mapParameters.put("код валюты", code);
@@ -29,7 +29,7 @@ public final class Validator {
             throw new RespException(400, "Символ валюты не должен превышать 3 символов.");
     }
 
-    public static void checkExchangeRates(String baseCurrenciesCode, String targetCurrenciesCode, String rate) {
+    public static void checkExchangeRatesParam(String baseCurrenciesCode, String targetCurrenciesCode, String rate) {
         if (baseCurrenciesCode == null || baseCurrenciesCode.isBlank()
                 || targetCurrenciesCode == null || targetCurrenciesCode.isBlank()
                 || rate == null || rate.isBlank()) {

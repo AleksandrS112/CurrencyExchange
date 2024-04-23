@@ -18,21 +18,6 @@ public class CurrencyService {
     public static CurrencyService getInstance() {
         return INSTANCE;
     }
-    public List<CurrencyDto> findAll() {
-        return currencyDao.findAll().stream()
-                .map(this::buildCurrencyDto)
-                .collect(Collectors.toList());
-    }
-
-    public Optional<CurrencyDto> findByCode(String code) {
-        Optional<CurrencyEntity> currencyEntityOptional = currencyDao.findByCode(code);
-        if (currencyEntityOptional.isEmpty()) {
-            return Optional.empty();
-        } else {
-            CurrencyEntity currencyEntity = currencyEntityOptional.get();
-            return Optional.of(buildCurrencyDto(currencyEntity));
-        }
-    }
     public CurrencyDto buildCurrencyDto(CurrencyEntity currencyEntity) {
         return new CurrencyDto(currencyEntity.getId(),
                 currencyEntity.getCode(),

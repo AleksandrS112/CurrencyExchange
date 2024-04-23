@@ -1,6 +1,5 @@
 package dao;
 
-import dto.CurrencyFilter;
 import exception.RespException;
 import model.CurrencyEntity;
 import util.ConnectionManager;
@@ -47,50 +46,10 @@ public class CurrencyDao implements Crud<Integer, CurrencyEntity> {
             """;
 
     private static final CurrencyDao INSTANCE = new CurrencyDao();
-
     private CurrencyDao() {
     }
-
     public static CurrencyDao getInstance() {
         return INSTANCE;
-    }
-
-    public List<CurrencyEntity> findAll(CurrencyFilter currencyFilter) {
-        List<Object> parameters = new ArrayList<>();
-        List<String> whereSql = new ArrayList<>();
-        if (currencyFilter.code() != null) {
-            whereSql.add("code = ?");
-            parameters.add(currencyFilter.code());
-        }
-        if (currencyFilter.full_name() != null) {
-            whereSql.add("full_name LIKE ?");
-            parameters.add("%" + currencyFilter.full_name() + "%");
-        }
-        if (currencyFilter.sign() != null) {
-            whereSql.add("sign = ?");
-            parameters.add(currencyFilter.sign());
-        }
-        String whereFlag = whereSql.isEmpty() ? "" : " WHERE ";
-        parameters.add(currencyFilter.limit());
-        parameters.add(currencyFilter.offset());
-        var where = whereSql.stream().collect(joining(" AND ", whereFlag, " LIMIT ? OFFSET ? "));
-        String sql = FIND_ALL_SQL + where;
-        System.out.println(sql);
-        try (var connection = ConnectionManager.get();
-             var prepareStatement = connection.prepareStatement(sql)) {
-            for (int i = 0; i < parameters.size(); i++) {
-                prepareStatement.setObject(i+1, parameters.get(i));
-            }
-            System.out.println(prepareStatement);
-            var resultSet = prepareStatement.executeQuery();
-            List<CurrencyEntity> listCurrencyEntities = new ArrayList<>();
-            while (resultSet.next()) {
-                listCurrencyEntities.add(bildCurrencyEntity(resultSet));
-            }
-            return listCurrencyEntities;
-        } catch (SQLException throwables) {
-            throw new RespException(500, "База данных недоступна");
-        }
     }
 
     public List<CurrencyEntity> findAll() {
