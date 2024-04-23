@@ -105,6 +105,7 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
             if (generatedKeys.next()) {
                 exchangeRatesEntity.setId(generatedKeys.getInt("id"));
             }
+            попробовать вытянуть курс и проверить правильно ли вставился
             return exchangeRatesEntity;
         } catch (SQLException sqlException) {
             String sqlState = sqlException.getSQLState();
