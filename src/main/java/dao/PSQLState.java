@@ -1,12 +1,13 @@
 package dao;
 
-public enum PSQLState {
+enum PSQLState {
 
     NOT_NULL ("23502"),
     UNIQUE ("23505"),
     CHECK ("23514"),
     FOREIGN_KEY ("23503"),
-    VARCHAR_LENGTH ("22001");
+    VARCHAR_LENGTH ("22001"),
+    NUMERIC ("22003");
 
     private final String state;
 
@@ -14,7 +15,7 @@ public enum PSQLState {
         this.state = state;
     }
 
-    public String getState() {
+    String getState() {
         return this.state;
     }
 

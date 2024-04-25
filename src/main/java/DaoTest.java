@@ -1,7 +1,6 @@
 
 import dao.CurrencyDao;
 import dao.ExchangeRatesDao;
-import dao.PSQLState;
 import exception.RespException;
 import model.CurrencyEntity;
 import model.ExchangeRatesEntity;

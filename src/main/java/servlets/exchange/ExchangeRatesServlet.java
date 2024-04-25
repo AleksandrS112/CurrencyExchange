@@ -27,6 +27,7 @@ public class ExchangeRatesServlet extends BaseServlet {
     public void init() throws ServletException {
         exchangeRatesDao = ExchangeRatesDao.getInstance();
         exchangeRatesService = ExchangeRatesService.getInstance();
+        super.init();
     }
 
     @Override

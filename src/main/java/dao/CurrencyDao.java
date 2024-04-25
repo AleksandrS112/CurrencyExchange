@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static dao.PSQLState.*;
-import static java.util.stream.Collectors.joining;
+
 
 public class CurrencyDao implements Crud<Integer, CurrencyEntity> {
 

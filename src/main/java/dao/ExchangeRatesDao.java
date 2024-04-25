@@ -1,10 +1,12 @@
 package dao;
 
+import dto.ExchangeRatesDto;
 import exception.RespException;
 import model.CurrencyEntity;
 import model.ExchangeRatesEntity;
 import util.ConnectionManager;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,6 +42,17 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
             INSERT INTO exchange_rates (base_currency_id, target_currency_id, rate)
             VALUES(?, ?, ?)
             """;
+
+    private static final String UPDATE_RATE_BY_CODS_SQL = """
+            UPDATE exchange_rates SET rate = ?
+             WHERE base_currency_id = (SELECT id
+                                         FROM currencies
+                                        WHERE code = ?)
+               AND target_currency_id = (SELECT id
+                                           FROM currencies
+                                          WHERE code = ?)
+            """;
+    private static final int MAX_SCALE_RATE = 6;
     private ExchangeRatesDao() {
     }
 
@@ -78,8 +91,37 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
     }
 
     @Override
-    public boolean update(ExchangeRatesEntity exchangeRatesEntityxchangeRatesEntity) {
-        return false;
+    public boolean update(ExchangeRatesEntity exchangeRatesEntity) {
+        if (exchangeRatesEntity.getRate().scale() > MAX_SCALE_RATE)
+            throw new RespException(400, "Курс валюты выходит за границы допустимой точности");
+        try (var connection = ConnectionManager.get();
+             var prepareStatement = connection.prepareStatement(UPDATE_RATE_BY_CODS_SQL)) {
+            prepareStatement.setBigDecimal(1, exchangeRatesEntity.getRate());
+            prepareStatement.setString(2, exchangeRatesEntity.getBaseCurrencyEntity().getCode());
+            prepareStatement.setString(3, exchangeRatesEntity.getTargetCurrencyEntity().getCode());
+            int result = prepareStatement.executeUpdate();
+            if (result == 1) {
+                return true;
+            } else {
+                throw new RespException(400, "Валютная пара отсутствует в базе данных");
+            }
+        } catch (SQLException sqlException) {
+            String sqlState = sqlException.getSQLState();
+            String message = sqlException.getMessage();
+            if (sqlState.equals(NOT_NULL.getState())) {
+                if (message.contains("\"base_currency_id\"")) {
+                    throw new RespException(400, "Не указана базовая валюта");
+                } else if (message.contains("\"target_currency_id\"")) {
+                    throw new RespException(400, "Не указана целевая валюта");
+                } else if (message.contains("\"rate\"")) {
+                    throw new RespException(400, "Не указан курс обмена");
+                }
+            } if (sqlState.equals(NUMERIC.getState())){
+                throw  new RespException(400, "Курс валюты выходит за границы допустимых значение");
+            }
+            throw new RespException(500, "База данных недоступна");
+        }
+
     }
 
     @Override
@@ -105,7 +147,7 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
             if (generatedKeys.next()) {
                 exchangeRatesEntity.setId(generatedKeys.getInt("id"));
             }
-            попробовать вытянуть курс и проверить правильно ли вставился
+            //попробовать вытянуть курс и проверить правильно ли вставился
             return exchangeRatesEntity;
         } catch (SQLException sqlException) {
             String sqlState = sqlException.getSQLState();
@@ -121,25 +163,28 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
             }
             if (sqlState.equals(FOREIGN_KEY.getState())) {
                 if (message.contains("exchange_rates_base_currency_id_fkey")) {
-                    throw new RespException(404, "Базовая валюта с кодом "
-                            + exchangeRatesEntity.getBaseCurrencyEntity().getCode() + " отсутствует");
+                    throw new RespException(404, "Базовая валюта с кодом " +
+                            exchangeRatesEntity.getBaseCurrencyEntity().getCode() + " отсутствует");
                 } else if (message.contains("exchange_rates_target_currency_id_fkey")) {
-                    throw new RespException(404, "Целевая валюта с кодом "
-                            + exchangeRatesEntity.getTargetCurrencyEntity().getCode() + " отсутствует");
+                    throw new RespException(404, "Целевая валюта с кодом " +
+                            exchangeRatesEntity.getTargetCurrencyEntity().getCode() + " отсутствует");
                 }
             }
             if (sqlState.equals(UNIQUE.getState())) {
                 if (message.contains("exchange_rates_base_and_target_currency_id_key")) {
-                    throw new RespException(409, "Валютная пара с таким кодом ("
-                            + exchangeRatesEntity.getBaseCurrencyEntity().getCode() + "|"
-                            + exchangeRatesEntity.getTargetCurrencyEntity().getCode()
-                            + ") уже существует");
+                    throw new RespException(409, "Валютная пара с таким кодом (" +
+                            exchangeRatesEntity.getBaseCurrencyEntity().getCode() + "|" +
+                            exchangeRatesEntity.getTargetCurrencyEntity().getCode() +
+                            ") уже существует");
                 }
             }
             if (sqlState.equals(CHECK.getState())) {
                 if (message.contains("exchange_rates_base_equals_target_check")) {
                     throw new RespException(400, "Указана одна и та же валютная пара");
                 }
+            }
+            if (sqlState.equals(NUMERIC.getState())) {
+                throw  new RespException(400, "Не верно указан курс обмена");
             }
             throw new RespException(500, "База данных недоступна");
         }

@@ -31,6 +31,7 @@
     <servlet-name>ExchangeRates</servlet-name>
     <url-pattern>/exchangeRates</url-pattern>
   </servlet-mapping>
+
   <servlet>
     <servlet-name>ExchangeRate</servlet-name>
     <servlet-class>servlets.exchange.ExchangeRateServlet</servlet-class>

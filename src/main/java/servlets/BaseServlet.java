@@ -17,13 +17,12 @@ public abstract class BaseServlet extends HttpServlet {
 
     protected CurrencyDao currencyDao;
     protected CurrencyService currencyService;
-    protected ObjectMapper objectMapper;
+    protected ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public void init() throws ServletException {
         currencyDao = CurrencyDao.getInstance();
         currencyService = CurrencyService.getInstance();
-        objectMapper = new ObjectMapper();
     }
 
     @Override
@@ -31,7 +30,7 @@ public abstract class BaseServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json; charset=utf-8");
         try {
-            super.service(req, resp);
+                super.service(req, resp);
         } catch (RespException respException) {
             resp.setStatus(respException.getCode());
             objectMapper.writeValue(resp.getWriter(), respException);
