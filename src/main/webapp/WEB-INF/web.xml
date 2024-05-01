@@ -43,7 +43,7 @@
 
   <servlet>
     <servlet-name>Exchange</servlet-name>
-    <servlet-class>servlets.exchange.ExchangeServlet</servlet-class>
+    <servlet-class>servlets.ExchangeServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Exchange</servlet-name>

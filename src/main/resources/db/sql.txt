@@ -22,3 +22,16 @@ CREATE TABLE exchange_rates
     CONSTRAINT exchange_rates_base_and_target_currency_id_key UNIQUE (base_currency_id, target_currency_id),
     CONSTRAINT exchange_rates_base_equals_target_check CHECK (base_currency_id != target_currency_id)
 )
+
+INSERT INTO currencies (id, code, full_name, sign)
+VALUES (1, 'USD', 'Доллар', '$'),
+       (2, 'RUB', 'Рубль', '₽'),
+       (3, 'KZT', 'Тенге', '₸');
+
+INSERT INTO exchange_rates (id, base_currency_id, target_currency_id, rate)
+VALUES (1, 1, 2, 100),
+       (2, 3, 1, 0.0023);
+
+
+
+
