@@ -1,0 +1,1418 @@
+{
+	"info": {
+		"_postman_id": "590303b1-41c3-48c7-8194-0894c472ae09",
+		"name": "CurrencyExchange",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34116348"
+	},
+	"item": [
+		{
+			"name": "CurrenciesServlet",
+			"item": [
+				{
+					"name": "/currencies (save)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/currencies?code=RUB&full_name=Российский рубль&sign=Р",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"currencies"
+							],
+							"query": [
+								{
+									"key": "code",
+									"value": "RUB"
+								},
+								{
+									"key": "full_name",
+									"value": "Российский рубль"
+								},
+								{
+									"key": "sign",
+									"value": "Р"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "/currencies (save)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/currencies",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"currencies"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "/currencies(save)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/currencies?code=&full_name=&sign=",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"currencies"
+									],
+									"query": [
+										{
+											"key": "code",
+											"value": ""
+										},
+										{
+											"key": "full_name",
+											"value": ""
+										},
+										{
+											"key": "sign",
+											"value": ""
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "/currencies(save)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/currencies?code=cod&full_name=&sign=",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"currencies"
+									],
+									"query": [
+										{
+											"key": "code",
+											"value": "cod"
+										},
+										{
+											"key": "full_name",
+											"value": ""
+										},
+										{
+											"key": "sign",
+											"value": ""
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "/currencies(save)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/currencies?code=cod&full_name=fullname&sign=",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"currencies"
+									],
+									"query": [
+										{
+											"key": "code",
+											"value": "cod"
+										},
+										{
+											"key": "full_name",
+											"value": "fullname"
+										},
+										{
+											"key": "sign",
+											"value": ""
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "/currencies(save)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/currencies?code=cod&full_name=fullname&sign=sig",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"currencies"
+									],
+									"query": [
+										{
+											"key": "code",
+											"value": "cod"
+										},
+										{
+											"key": "full_name",
+											"value": "fullname"
+										},
+										{
+											"key": "sign",
+											"value": "sig"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "/currencies(save)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/currencies?code=COD&full_name=llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll&sign=sig",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"currencies"
+									],
+									"query": [
+										{
+											"key": "code",
+											"value": "COD"
+										},
+										{
+											"key": "full_name",
+											"value": "llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll"
+										},
+										{
+											"key": "sign",
+											"value": "sig"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "/currencies(save)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/currencies?code=COD&full_name=fullname&sign=sigg",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"currencies"
+									],
+									"query": [
+										{
+											"key": "code",
+											"value": "COD"
+										},
+										{
+											"key": "full_name",
+											"value": "fullname"
+										},
+										{
+											"key": "sign",
+											"value": "sigg"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "/currencies(save)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/currencies?code=RUB&full_name=fullname&sign=sig",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"currencies"
+									],
+									"query": [
+										{
+											"key": "code",
+											"value": "RUB"
+										},
+										{
+											"key": "full_name",
+											"value": "fullname"
+										},
+										{
+											"key": "sign",
+											"value": "sig"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "/currencies (findAll)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/currencies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"currencies"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CurrencyServlet",
+			"item": [
+				{
+					"name": "/currency (findByCode)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/currency/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"currency",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/currency (findByCode)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/currency/gGv",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"currency",
+								"gGv"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/currency (findByCode)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/currency/USD",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"currency",
+								"USD"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ExchangeRatesServlet",
+			"item": [
+				{
+					"name": "/exchangeRates (findAll)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/exchangeRates",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchangeRates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/exchangeRates (save)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/exchangeRates?baseCurrenciesCode=RUB&targetCurrenciesCode=USD&rate=0.01",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchangeRates"
+							],
+							"query": [
+								{
+									"key": "baseCurrenciesCode",
+									"value": "RUB"
+								},
+								{
+									"key": "targetCurrenciesCode",
+									"value": "USD"
+								},
+								{
+									"key": "rate",
+									"value": "0.01"
+								}
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": [
+						{
+							"name": "/exchangeRates (save)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/exchangeRates",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"exchangeRates"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "/exchangeRates (save)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/exchangeRates?baseCurrenciesCode=USD",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"exchangeRates"
+									],
+									"query": [
+										{
+											"key": "baseCurrenciesCode",
+											"value": "USD"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "/exchangeRates (save)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/exchangeRates?baseCurrenciesCode=USD&targetCurrenciesCode=RUB",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"exchangeRates"
+									],
+									"query": [
+										{
+											"key": "baseCurrenciesCode",
+											"value": "USD"
+										},
+										{
+											"key": "targetCurrenciesCode",
+											"value": "RUB"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "/exchangeRates (save)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/exchangeRates?baseCurrenciesCode=XXX&targetCurrenciesCode=USD&rate=100",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"exchangeRates"
+									],
+									"query": [
+										{
+											"key": "baseCurrenciesCode",
+											"value": "XXX"
+										},
+										{
+											"key": "targetCurrenciesCode",
+											"value": "USD"
+										},
+										{
+											"key": "rate",
+											"value": "100"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "/exchangeRates (save)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/exchangeRates?baseCurrenciesCode=USD&targetCurrenciesCode=XXX&rate=100",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"exchangeRates"
+									],
+									"query": [
+										{
+											"key": "baseCurrenciesCode",
+											"value": "USD"
+										},
+										{
+											"key": "targetCurrenciesCode",
+											"value": "XXX"
+										},
+										{
+											"key": "rate",
+											"value": "100"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "/exchangeRates (save)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/exchangeRates?baseCurrenciesCode=RUB&targetCurrenciesCode=USD&rate=0.4Gg",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"exchangeRates"
+									],
+									"query": [
+										{
+											"key": "baseCurrenciesCode",
+											"value": "RUB"
+										},
+										{
+											"key": "targetCurrenciesCode",
+											"value": "USD"
+										},
+										{
+											"key": "rate",
+											"value": "0.4Gg"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "/exchangeRates (save)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/exchangeRates?baseCurrenciesCode=RUB&targetCurrenciesCode=RUB&rate=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"exchangeRates"
+									],
+									"query": [
+										{
+											"key": "baseCurrenciesCode",
+											"value": "RUB"
+										},
+										{
+											"key": "targetCurrenciesCode",
+											"value": "RUB"
+										},
+										{
+											"key": "rate",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "/exchangeRates (save)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/exchangeRates?baseCurrenciesCode=USD&targetCurrenciesCode=RUB&rate=100",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"exchangeRates"
+									],
+									"query": [
+										{
+											"key": "baseCurrenciesCode",
+											"value": "USD"
+										},
+										{
+											"key": "targetCurrenciesCode",
+											"value": "RUB"
+										},
+										{
+											"key": "rate",
+											"value": "100"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "/exchangeRates (save)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/exchangeRates?baseCurrenciesCode=RUB&targetCurrenciesCode=USD&rate=0.01",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"exchangeRates"
+									],
+									"query": [
+										{
+											"key": "baseCurrenciesCode",
+											"value": "RUB"
+										},
+										{
+											"key": "targetCurrenciesCode",
+											"value": "USD"
+										},
+										{
+											"key": "rate",
+											"value": "0.01"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "ExchangeRateServlet",
+			"item": [
+				{
+					"name": "/exchangeRate/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/exchangeRate/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchangeRate",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/exchangeRate/GFVgf",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/exchangeRate/GFVgf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchangeRate",
+								"GFVgf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/exchangeRate/XXXYYY",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/exchangeRate/XXXYYY",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchangeRate",
+								"XXXYYY"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/exchangeRate/USDRUB",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/exchangeRate/USDRUB",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchangeRate",
+								"USDRUB"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/exchangeRate/",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/exchangeRate/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchangeRate",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/exchangeRate/fgfgvd",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/exchangeRate/fgfgvd",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchangeRate",
+								"fgfgvd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/exchangeRate/USDRUB",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/exchangeRate/USDRUB",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchangeRate",
+								"USDRUB"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/exchangeRate/USDRUB",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/exchangeRate/USDRUB?rate=g45",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchangeRate",
+								"USDRUB"
+							],
+							"query": [
+								{
+									"key": "rate",
+									"value": "g45"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/exchangeRate/USDRUB",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/exchangeRate/USDRUB?rate=100000000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchangeRate",
+								"USDRUB"
+							],
+							"query": [
+								{
+									"key": "rate",
+									"value": "100000000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/exchangeRate/USDRUB",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/exchangeRate/USDRUB?rate=55.555555555555",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchangeRate",
+								"USDRUB"
+							],
+							"query": [
+								{
+									"key": "rate",
+									"value": "55.555555555555"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/exchangeRate/USDRUB",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/exchangeRate/USDRUB?rate=100.00",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchangeRate",
+								"USDRUB"
+							],
+							"query": [
+								{
+									"key": "rate",
+									"value": "100.00"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ExchangeServlet",
+			"item": [
+				{
+					"name": "ex amount",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/exchange?from=RUB&to=KZT&amount=1ап",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchange"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "RUB"
+								},
+								{
+									"key": "to",
+									"value": "KZT"
+								},
+								{
+									"key": "amount",
+									"value": "1ап"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "null amount",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/exchange?from=RUB&to=KZT",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchange"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "RUB"
+								},
+								{
+									"key": "to",
+									"value": "KZT"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "null from",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/exchange?to=KZT&amount=100",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchange"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "RUB",
+									"disabled": true
+								},
+								{
+									"key": "to",
+									"value": "KZT"
+								},
+								{
+									"key": "amount",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "null to",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/exchange?from=RUB&amount=100",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchange"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "RUB"
+								},
+								{
+									"key": "to",
+									"value": "KZT",
+									"disabled": true
+								},
+								{
+									"key": "amount",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ex from",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/exchange?from=RUb&to=KZT&amount=100",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchange"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "RUb"
+								},
+								{
+									"key": "to",
+									"value": "KZT"
+								},
+								{
+									"key": "amount",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ex to",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/exchange?from=RUB&to=KZg&amount=100",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchange"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "RUB"
+								},
+								{
+									"key": "to",
+									"value": "KZg"
+								},
+								{
+									"key": "amount",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/exchangeRate/USDRUB",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/exchange?from=USD&to=RUB&amount=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchange"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "USD"
+								},
+								{
+									"key": "to",
+									"value": "RUB"
+								},
+								{
+									"key": "amount",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/exchangeRate/RUBUSD",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/exchange?from=RUB&to=USD&amount=100",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchange"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "RUB"
+								},
+								{
+									"key": "to",
+									"value": "USD"
+								},
+								{
+									"key": "amount",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/exchangeRate/RUBTNG",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/exchange?from=RUB&to=KZT&amount=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchange"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "RUB"
+								},
+								{
+									"key": "to",
+									"value": "KZT"
+								},
+								{
+									"key": "amount",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

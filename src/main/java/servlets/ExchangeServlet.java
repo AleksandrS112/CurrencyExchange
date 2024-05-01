@@ -27,6 +27,10 @@ public class ExchangeServlet extends BaseServlet {
         } catch (NumberFormatException e) {
             throw new RespException(400, "Не корректно указано количество валюты");
         }
+        if (baseCurrencyCode == null || baseCurrencyCode.isBlank())
+            throw new RespException(400, "Не указан код базовой валюты");
+        if (targetCurrencyCode == null || targetCurrencyCode.isBlank())
+            throw new RespException(400, "Не указан код целевой валюты");
         if (!baseCurrencyCode.matches("[A-Z]{3}"))
             throw new RespException(400, "Не корректно указан код базовой валюты");
         if (!targetCurrencyCode.matches("[A-Z]{3}"))
