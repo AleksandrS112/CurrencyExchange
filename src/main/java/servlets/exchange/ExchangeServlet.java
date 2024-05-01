@@ -28,9 +28,13 @@ public class ExchangeServlet extends BaseServlet {
         } catch (NumberFormatException e) {
             throw new RespException(400, "Не корректно указано количество валюты");
         }
+        if (baseCurrencyCode.matches("[A-Z]{3}"))
+            throw new RespException(400, "Не корректно указан код базовой валюты");
+        if (targetCurrencyCode.matches("[A-Z]{3}"))
+            throw new RespException(400, "Не корректно указан код целевой валюты");
         Optional<ExchangeDTO> exchangeDTO = exchangeService.executeExchange(baseCurrencyCode, targetCurrencyCode, amount);
         if (exchangeDTO.isPresent())
-            objectMapper.writeValue(resp.getWriter(), exchangeDTO);
+            objectMapper.writeValue(resp.getWriter(), exchangeDTO.get());
         else
             throw new RespException(400, "Нет возможности произвести обмен");
     }
