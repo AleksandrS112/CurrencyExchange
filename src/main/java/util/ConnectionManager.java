@@ -1,5 +1,7 @@
 package util;
 
+import exception.RespException;
+
 import java.lang.reflect.Proxy;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -57,7 +59,7 @@ public final class ConnectionManager {
             );
         }
         catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RespException(500, "База данных недоступна");
         }
     }
     private static void loadDriver() {

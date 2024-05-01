@@ -60,9 +60,14 @@ public class ExchangeRateServlet extends BaseServlet {
         String doubleCode = req.getPathInfo().replaceAll("/", "");
         checkDoubleCode(doubleCode);
         String rateParam = req.getParameter("rate");
-        if (rateParam == null)
-            throw new RespException(400, "Не указано значение курса");
-        BigDecimal rate = BigDecimal.valueOf(Double.parseDouble(rateParam)).stripTrailingZeros();
+        BigDecimal rate;
+        try {
+            rate = BigDecimal.valueOf(Double.parseDouble(rateParam)).stripTrailingZeros();
+        } catch (NullPointerException e) {
+            throw new RespException(400, "Не указано значение курс обмена");
+        } catch (NumberFormatException e) {
+            throw new RespException(400, "Некорректно указан курс обмена");
+        }
         String baseCurrencyCode = doubleCode.substring(0, 3);
         String targetCurrencyCode = doubleCode.substring(3);
         CurrencyEntity baseCurrencyEntity = new CurrencyEntity();

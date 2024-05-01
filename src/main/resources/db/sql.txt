@@ -18,7 +18,7 @@ CREATE TABLE exchange_rates
     id                 SERIAL PRIMARY KEY,
     base_currency_id   INT REFERENCES currencies (id) NOT NULL ,
     target_currency_id INT REFERENCES currencies (id) NOT NULL ,
-    rate               NUMERIC(10) NOT NULL,
+    rate               NUMERIC(12,6) NOT NULL,
     CONSTRAINT exchange_rates_base_and_target_currency_id_key UNIQUE (base_currency_id, target_currency_id),
     CONSTRAINT exchange_rates_base_equals_target_check CHECK (base_currency_id != target_currency_id)
 )

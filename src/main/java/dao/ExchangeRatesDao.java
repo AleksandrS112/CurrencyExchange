@@ -116,7 +116,7 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
                 } else if (message.contains("\"rate\"")) {
                     throw new RespException(400, "Не указан курс обмена");
                 }
-            } if (sqlState.equals(NUMERIC.getState())){
+            } else if (sqlState.equals(NUMERIC.getState())){
                 throw  new RespException(400, "Курс валюты выходит за границы допустимых значение");
             }
             throw new RespException(500, "База данных недоступна");
@@ -137,6 +137,8 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
 
     @Override
     public ExchangeRatesEntity save(ExchangeRatesEntity exchangeRatesEntity) {
+        if (exchangeRatesEntity.getRate().scale() > MAX_SCALE_RATE)
+            throw new RespException(400, "Курс валюты выходит за границы допустимой точности");
         try (var connection = ConnectionManager.get();
              var prepareStatement = connection.prepareStatement(SAVE_SQL, PreparedStatement.RETURN_GENERATED_KEYS)) {
             prepareStatement.setInt(1, exchangeRatesEntity.getBaseCurrencyEntity().getId());
@@ -147,7 +149,6 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
             if (generatedKeys.next()) {
                 exchangeRatesEntity.setId(generatedKeys.getInt("id"));
             }
-            //попробовать вытянуть курс и проверить правильно ли вставился
             return exchangeRatesEntity;
         } catch (SQLException sqlException) {
             String sqlState = sqlException.getSQLState();
@@ -184,7 +185,7 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
                 }
             }
             if (sqlState.equals(NUMERIC.getState())) {
-                throw  new RespException(400, "Не верно указан курс обмена");
+                throw  new RespException(400, "Курс валюты выходит за границы допустимых значение");
             }
             throw new RespException(500, "База данных недоступна");
         }
@@ -222,7 +223,8 @@ public class ExchangeRatesDao implements Crud<Integer, ExchangeRatesEntity> {
                 resultSet.getInt(1),
                 baseCurrencyEntity,
                 targetCurrencyEntity,
-                resultSet.getBigDecimal(2)
+                //чтобы не отображались лишние нули и экспоненты
+                new BigDecimal(resultSet.getBigDecimal(2).stripTrailingZeros().toPlainString())
         );
     }
 }

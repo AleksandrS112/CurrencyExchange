@@ -3,7 +3,6 @@ package dto;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import model.CurrencyEntity;
 
 import java.math.BigDecimal;
 
@@ -24,4 +23,15 @@ public class ExchangeRatesDto {
             this.rate = rate;
         }
 
+    public BigDecimal getRate() {
+        return rate;
+    }
+
+    public CurrencyDto getBaseCurrencyDto() {
+        return baseCurrencyDto;
+    }
+
+    public CurrencyDto getTargetCurrencyDto() {
+        return targetCurrencyDto;
+    }
 }
